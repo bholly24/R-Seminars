@@ -1,0 +1,277 @@
+---
+title: "Introduction to R"
+author: "Brendan Holly"
+date: "1/31/2020"
+output: 
+  slidy_presentation:
+    theme: paper
+    highlight: espresso
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r include=FALSE}
+
+library(tidyverse)
+
+```
+
+## An Overview
+
+- Using R, R studio and a good R workflow
+- The benefits of R 
+- Basic R actions and data types
+- A useful R shortcuts
+
+## R
+
+- R is a free, open-source  programming language built on the S language, which was developed by AT&Ts Bell labs in the 1970s. 
+- R was released in its current form in the 90s
+- It's used primarily for statistics, data analysis, and graphing
+- R is a functional programming language
+
+## Why use R?
+- Free
+- Reproducible
+- Considered one of the best graphing programs
+- Additional packages provide more functionality than plenty of paid software; often new methods are implemented here first!
+- Functionality: create your own functions!
+
+
+## Understanding R Studio's layout
+Four panes:  
+
+1. Source: R scripts  
+
+2. Console: Where the scripts are run  
+
+3. Enviornment: The area where saved data and variables are stored  
+
+4. Files and plots: The area where plots appear and files in the same folder can be viewed  
+
+```{r echo = FALSE}
+knitr::include_graphics("studio.png")
+
+```
+
+## R Scripts
+
+- The record of your work
+- Try and keep the script organized. You want to be able to rerun it without errors
+- It's useful to include comments if you're doing something important or complicated and you want to remember why you did it later
+
+```{r eval=FALSE}
+# I'm dropping values greater than 10 because they are outliers
+
+filter(df, x < 10)
+
+```
+
+## Start a New Project
+- Every time you start a new class or you're analyzing new data, make a new R Project!
+- R projects are a great way to organize your work
+- Put the data files you will use in the same folder as the R project folder
+
+```{r echo = FALSE}
+knitr::include_graphics("project.png")
+
+```
+
+## Importing data
+
+- R can handle importing basically any data type!
+- Basic format: read("data_name.csv")
+- Easiest: If the data is in your project folder, import from there!
+
+```{r echo = FALSE, fig.width=10, fig.height=8}
+knitr::include_graphics("import.png")
+
+```
+
+## Best Practice
+
+- Copy the code from this panel and put it at the start of your R script
+
+```{r echo = FALSE, fig.width= 10, fig}
+knitr::include_graphics("import_two.png")
+
+```
+
+## Examining your data
+
+- str gives an overview of the type of each variable as well as the first couple of rows
+
+```{r}
+
+data(mtcars)
+
+str(mtcars)
+
+```
+
+## Examining your data
+
+- View(mtcars) opens up a new window that you can scroll through the data
+
+```{r echo = FALSE, fig.width= 10, fig.height=8}
+
+data(mtcars)
+
+knitr::include_graphics("view.png")
+
+```
+
+## Assigning a variable name
+
+- Use the assignemnt operator <- to name something
+- c is used to combine multiple values
+
+```{r}
+
+ages <- c(18, 24, 89, 6)
+
+```
+
+## Data types
+There are four major data types and most functions require the data is a certain type.
+
+1. Character variables
+2. Double variables
+3. Logical variables
+4. Factors
+
+## Data types 
+
+- Character values are surrounded by quotes " "
+- You can use is.character to check your variable is the right type
+
+```{r}
+
+characters <- c("dogs", "cats", "trust")
+
+is.character(characters)
+
+```
+
+## Double variables
+
+- Numeric variables, which can accept integers or numeric data (with a decimal)
+
+```{r}
+
+numbers <- c(3, 6, 9, 53)
+
+is.numeric(numbers)
+
+```
+
+- If you ask if numbers is type character
+```{r}
+
+is.character(numbers)
+
+```
+
+## Logical variables
+
+```{r}
+
+logical <- c(TRUE, TRUE, FALSE)
+
+is.logical(logical)
+
+```
+
+##  Factors
+
+- Factors (ordinal variables)
+
+```{r}
+
+factor <- factor(c("Agree", "Neutral", "Disagree"))
+
+is.factor(factor)
+
+```
+
+- To see the levels of a factor:
+```{r}
+
+levels(factor)
+
+```
+
+## Mixing data types
+
+- If you data types are mixed, R will choose one
+```{r}
+
+mixed_types <- c(12, 5, 3, "horse")
+
+typeof(mixed_types)
+
+```
+## Missing Data
+- NA is recorded if there is no data for that observation
+- Most functions won't run if you have NAs in your data
+- There are lots of ways to remove NAs, but you want to make sure you understand why they are there in the first place
+```{r}
+data <- c(NA, 8, 2, 5)
+
+sum(data)
+
+data_omit <- na.omit(data)
+
+sum(data_omit)
+```
+
+## How to name in R
+- Shorter is better
+- Be descriptive (i.e. don't name things data or model)
+- Don't include spaces or other weird characters
+- I prefer using snake case for variables
+
+```{r}
+# Good (snake case)
+trust_values <- c(0, 0, 0)
+
+# Also good (camel case)
+trustValues <- c(0, 0, 0)
+
+#Bad
+"Trust Values" <- c(0, 0, 0)
+
+```
+
+## Simplest data structures
+- A vector is a single variable, with every value of the same type
+- Data frames are a group of variables. They can be different types but they must all be the same length!
+
+```{r}
+vector <- c(3, 5, 6)
+
+vector_two <- c("dog", "cat", "mouse")
+
+data_frame <- data.frame(one = vector, two = vector_two)
+
+str(data_frame)
+
+```
+
+## Installing and loading a package
+
+```{r}
+
+#install.packages("tidyverse")
+
+library(tidyverse)
+
+```
+
+## A graphing shortcut!
+- ggplot2 is the premier R graphing package but it can be slightly hard to start out with
+- R add-on "esquisse" can be used to make graphs using point and click commands
+- Install the package and try it out
+
